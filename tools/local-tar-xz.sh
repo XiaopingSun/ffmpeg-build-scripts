@@ -1,24 +1,23 @@
 #! /usr/bin/env bash
 
-REMOTE_REPO=$1
-LOCAL_WORKSPACE=$2
-TARGET_VERSION=$3
+LOCAL_WORKSPACE=$1
+TAR_TARGET=$2
 
 
-if [ -z $LOCAL_WORKSPACE -o -z $TARGET_VERSION ]; then
-    echo "invalid call pull-repo.sh '$LOCAL_WORKSPACE' '$TARGET_VERSION'"
+if [ -z $LOCAL_WORKSPACE -o -z $TAR_TARGET ]; then
+    echo_r "invalid param '$LOCAL_WORKSPACE' '$TAR_TARGET'"
     exit 1
 fi
 
 # 目录已经存在 则先删除
-if [ -d $LOCAL_WORKSPACE/$TARGET_VERSION ]; then
-    rm -rf $LOCAL_WORKSPACE/$TARGET_VERSION
+if [ -d $LOCAL_WORKSPACE/$TAR_TARGET ]; then
+    rm -rf $LOCAL_WORKSPACE/$TAR_TARGET
 fi
 
 # 解压指定的.tar.xz文件
-echo "== tar $TARGET_VERSION xz =="
+echo_c "== tar $TAR_TARGET xz =="
 cd $LOCAL_WORKSPACE
-mkdir -p $TARGET_VERSION
-tar -xvJf $TARGET_VERSION.tar.xz --strip-components 1 -C $TARGET_VERSION
+mkdir -p $TAR_TARGET
+tar -xvJf $TAR_TARGET.tar.xz --strip-components 1 -C $TAR_TARGET
 cd -
-echo "tar $TARGET_VERSION xz success"
+echo_c "tar $TAR_TARGET xz success"
